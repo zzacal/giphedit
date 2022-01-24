@@ -22,10 +22,4 @@ public class GameController : ControllerBase {
   {
     return await _service.CreateGame();
   }
-
-  [HttpPost]
-  public async Task<Game> Post(Game game) 
-  {
-    return game;
-  }
 }

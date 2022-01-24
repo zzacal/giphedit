@@ -25,4 +25,11 @@ public class PlayerController : ControllerBase {
               ? await _service.New() 
               : await _service.Get(id) ?? await _service.New();
   }
+
+  [HttpPut]
+  [Route("/player/{id}/rename/{name}")]
+  public async Task<Player> Rename(string id, string name) 
+  {
+    return await _service.Rename(id, name);
+  }
 }

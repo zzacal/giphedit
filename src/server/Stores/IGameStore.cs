@@ -4,7 +4,7 @@ using Giphedit.Models;
 namespace Giphedit.Stores;
 
 public interface IGameStore {
-  Task<Game> CreateGame(Game game);
-  Task<Game?> GetGame(string id);
-  Task<Game?> UpdateGame(Game game);
+  Task<Game> Create(Game game);
+  Task<Game?> Get(string id);
+  Task<Game?> Update(Game game);
 }

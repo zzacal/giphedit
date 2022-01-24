@@ -10,6 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<IGameStore, InMemoryGameStore>();
 builder.Services.AddSingleton<IGameService, GameService>();
 
+builder.Services.AddSingleton<IPlayerStore, InMemoryPlayerStore>();
+builder.Services.AddSingleton<IPlayerService, PlayerService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

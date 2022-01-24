@@ -18,8 +18,11 @@ public class PlayerController : ControllerBase {
   }
 
   [HttpGet]
+  [Route("/player/{id?}")]
   public async Task<Player> Get(string? id = null) 
   {
-    return id == null ? await _service.New() : await _service.Get(id);
+    return id == null 
+              ? await _service.New() 
+              : await _service.Get(id) ?? await _service.New();
   }
 }

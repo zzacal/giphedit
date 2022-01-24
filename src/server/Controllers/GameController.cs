@@ -8,18 +8,23 @@ namespace Giphedit.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class GameController : ControllerBase {
+public class GameController : ControllerBase
+{
   private readonly IGameService _service;
   private readonly ILogger<GameController> _logger;
 
-  public GameController(ILogger<GameController> logger, IGameService service) {
+  public GameController(ILogger<GameController> logger, IGameService service)
+  {
     _logger = logger;
     _service = service;
   }
 
   [HttpGet]
-  public async Task<Game> Get() 
+  [Route("/game/{id?}")]
+  public async Task<Game> Get(string? id = null)
   {
-    return await _service.CreateGame();
+    return id == null
+              ? await _service.CreateGame()
+              : await _service.GetGame(id) ?? await _service.CreateGame();
   }
 }

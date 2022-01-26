@@ -23,9 +23,7 @@ public class GameController : ControllerBase
   [Route("/game/{id?}")]
   public async Task<Game> Get(string? id = null)
   {
-    return id == null
-              ? await _service.CreateGame()
-              : await _service.GetGame(id) ?? await _service.CreateGame();
+    return await _service.GetOrCreateGame(id);
   }
 
   [HttpGet]
@@ -40,5 +38,19 @@ public class GameController : ControllerBase
   public async Task<Game> Start(string id) 
   {
     return await _service.Start(id);
+  }
+
+  [HttpGet]
+  [Route("/game/{id}/play/{playerId}/{cardId}")]
+  public async Task<Game> Play(string id, string playerId, string cardId) 
+  {
+    return await _service.Play(id, playerId, cardId);
+  }
+
+  [HttpGet]
+  [Route("/game/{id}/judge/{playerId}/{cardId}")]
+  public async Task<Game> Judge(string id, string playerId, string cardId) 
+  {
+    return await _service.Judge(id, playerId, cardId);
   }
 }

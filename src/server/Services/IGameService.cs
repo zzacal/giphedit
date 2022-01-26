@@ -5,9 +5,9 @@ namespace Giphedit.Services;
 
 public interface IGameService {
   Task<Game> CreateGame();
-  Task<Game> GetGame(string id);
-  Task<Game> UpdateGame(Game game);
-  Task<Game> JoinGame(string id, string playerId);
-  Task<Game> Start(string id);
-  Task<Game> Play(string id, string playerId, string cardId);
+  Task<Game> GetOrCreateGame(string? gameId);
+  Task<Game> JoinGame(string gameId, string playerId);
+  Task<Game> Start(string gameId);
+  Task<Game> Play(string gameId, string playerId, string cardId);
+  Task<Game> Judge(string gameId, string playerId, string cardId);
 }

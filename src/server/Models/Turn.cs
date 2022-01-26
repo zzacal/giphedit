@@ -12,4 +12,5 @@ public class Turn
   public Card Card { get; set; }
   public Player Judge { get; set; }
   public List<Card> Plays { get; set; } = new List<Card>();
+  public Card? Winner { get; set; }
 }

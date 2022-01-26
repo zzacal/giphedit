@@ -28,6 +28,15 @@ public class GameService : IGameService
   private static int countDrawStack(int playerCount, int turnsPerPlayer) => countTurns(playerCount, turnsPerPlayer) * (playerCount - 1);
   private static int countPlayerHandCards(int playerCount, int handCount) => playerCount * handCount;
 
+  private async Task<Game> UpdateGame(Game game)
+  {
+    var result = await _games.Update(game);
+    if (result == null)
+    {
+      throw new GameNotFoundException(game.Id);
+    }
+    return result;
+  }
   private static Game AdvanceTurn(Game game) 
   {
     if(game.IsEnded || !game.TurnCardStack.TryPop(out var nextCard)) {
@@ -46,12 +55,40 @@ public class GameService : IGameService
     return game;
   }
 
-  public async Task<Game> Play(string id, string playerId, string cardId)
-  {
-    var game = await _games.Get(id);
+  private async Task<Game> GetGameOrThrow(string gameId) {
+    var game = await _games.Get(gameId);
     if(game == null) {
-      throw new GameNotFoundException(id);
+      throw new GameNotFoundException(gameId);
     }
+    return game;
+  }
+  public async Task<Game> Judge(string gameId, string playerId, string cardId) {
+    var game = await GetGameOrThrow(gameId);
+    var turn = game.Turns.Peek();
+
+    // Need a new turn
+    if (turn == null || turn.Winner != null) {
+      return AdvanceTurn(game);
+    }
+
+    // Turn is not over
+    if (turn.Plays.Count < game.Players.Count - 1) {
+      return game;
+    }
+
+    // Wrong judge or missing card
+    if(turn.Judge.Id != playerId
+      || !turn.Plays.Any(c => c.Id == cardId)) {
+        return game;
+      }
+
+    turn.Winner = turn.Plays.First(c => c.Id == cardId);
+    return await UpdateGame(AdvanceTurn(game));
+  }
+
+  public async Task<Game> Play(string gameId, string playerId, string cardId)
+  {
+    var game = await GetGameOrThrow(gameId);
 
     var player = game.Players.First(p => p.Id == playerId);
     var card = player.Hand.First(c => c.Id == cardId);
@@ -62,13 +99,10 @@ public class GameService : IGameService
     
     return await UpdateGame(game);
   }
-  public async Task<Game> Start(string id)
+  
+  public async Task<Game> Start(string gameId)
   {
-    var game = await _games.Get(id);
-    if (game == null)
-    {
-      throw new GameNotFoundException(id);
-    }
+    var game = await GetGameOrThrow(gameId);
 
     // Calculate cahdz needed
     var turnCount = countTurns(game.Players.Count, turnPerPlayer);
@@ -88,18 +122,13 @@ public class GameService : IGameService
     return await UpdateGame(AdvanceTurn(game));
   }
 
-  public async Task<Game> JoinGame(string id, string playerId)
+  public async Task<Game> JoinGame(string gameId, string playerId)
   {
+    var game = await GetGameOrThrow(gameId);
     var player = await _players.Get(playerId);
-    var game = await _games.Get(id);
     if (player == null)
     {
       throw new PlayerNotFoundException(playerId);
-    }
-
-    if (game == null)
-    {
-      throw new GameNotFoundException(id);
     }
 
     var existingPlayer = game.Players.FirstOrDefault(p => p.Id == playerId);
@@ -116,7 +145,7 @@ public class GameService : IGameService
 
     if (result == null)
     {
-      throw new GameNotFoundException(id);
+      throw new GameNotFoundException(gameId);
     }
 
     return result;
@@ -128,19 +157,12 @@ public class GameService : IGameService
     return await _games.Create(game);
   }
 
-  public async Task<Game> GetGame(string id)
+  public async Task<Game> GetOrCreateGame(string? gameId)
   {
-    return await _games.Get(id) ?? await CreateGame();
-  }
-
-  public async Task<Game> UpdateGame(Game game)
-  {
-    var result = await _games.Update(game);
-    if (result == null)
-    {
-      throw new GameNotFoundException(game.Id);
+    if(string.IsNullOrWhiteSpace(gameId)) {
+      return await CreateGame();
     }
-    return result;
+    return await _games.Get(gameId) ?? await CreateGame();
   }
 
 }

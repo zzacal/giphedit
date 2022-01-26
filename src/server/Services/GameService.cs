@@ -20,13 +20,48 @@ public class GameService : IGameService
   }
 
   // RULES
-  static int turnPerPlayer = 2;
-  static int playerHandSize = 7;
+  private static int turnPerPlayer = 2;
+  private static int playerHandSize = 7;
 
+  // Calculations
+  private static int countTurns(int playerCount, int turnsPerPlayer) => playerCount * turnsPerPlayer;
+  private static int countDrawStack(int playerCount, int turnsPerPlayer) => countTurns(playerCount, turnsPerPlayer) * (playerCount - 1);
+  private static int countPlayerHandCards(int playerCount, int handCount) => playerCount * handCount;
 
-  private int countTurns(int playerCount, int turnsPerPlayer) => playerCount * turnsPerPlayer;
-  private int countDrawStack(int playerCount, int turnsPerPlayer) => countTurns(playerCount, turnsPerPlayer) * playerCount;
-  private int countPlayerHandCards(int playerCount, int handCount) => playerCount * handCount;
+  private static Game AdvanceTurn(Game game) 
+  {
+    if(game.IsEnded || !game.TurnCardStack.TryPop(out var nextCard)) {
+      game.IsEnded = true;
+      return game;
+    }
+
+    var nextJudgeIndex = 
+      game.Turns.TryPeek(out var last) && game.Players.FindIndex(p => p.Id == last.Judge.Id) < game.Players.Count 
+        ? game.Players.FindIndex(p => p.Id == last.Judge.Id) + 1
+        : 0;
+    var next = new Turn(nextCard, game.Players[nextJudgeIndex]);
+
+    game.Turns.Push(next);
+
+    return game;
+  }
+
+  public async Task<Game> Play(string id, string playerId, string cardId)
+  {
+    var game = await _games.Get(id);
+    if(game == null) {
+      throw new GameNotFoundException(id);
+    }
+
+    var player = game.Players.First(p => p.Id == playerId);
+    var card = player.Hand.First(c => c.Id == cardId);
+    player.Hand.Remove(card);
+
+    var turn = game.Turns.Peek();
+    turn.Plays.Add(card);
+    
+    return await UpdateGame(game);
+  }
   public async Task<Game> Start(string id)
   {
     var game = await _games.Get(id);
@@ -35,22 +70,22 @@ public class GameService : IGameService
       throw new GameNotFoundException(id);
     }
 
+    // Calculate cahdz needed
     var turnCount = countTurns(game.Players.Count, turnPerPlayer);
     var drawStackCount = countDrawStack(game.Players.Count, turnPerPlayer);
     var playerCardCount = countPlayerHandCards(game.Players.Count, playerHandSize);
 
+    // Retrieve and hand-out cards
     var cards = await _cards.GetCards(turnCount + drawStackCount + playerCardCount);
-
     game.TurnCardStack = new Stack<Card>(cards.Skip(0).Take(turnCount));
     game.DrawStack = new Stack<Card>(cards.Skip(turnCount).Take(drawStackCount));
-    
     for (var x = 0; x < game.Players.Count; x++) 
     {
       var taken = turnCount + drawStackCount + (x * playerHandSize);
       game.Players[x].Hand = cards.Skip(taken).Take(playerHandSize).ToList();
     }
 
-    return await UpdateGame(game);
+    return await UpdateGame(AdvanceTurn(game));
   }
 
   public async Task<Game> JoinGame(string id, string playerId)

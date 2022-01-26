@@ -9,4 +9,5 @@ public interface IGameService {
   Task<Game> UpdateGame(Game game);
   Task<Game> JoinGame(string id, string playerId);
   Task<Game> Start(string id);
+  Task<Game> Play(string id, string playerId, string cardId);
 }

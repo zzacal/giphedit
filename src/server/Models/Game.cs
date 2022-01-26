@@ -15,4 +15,6 @@ public class Game
   public List<Player> Players { get; set; } = new List<Player>();
   public Stack<Card> TurnCardStack { get; set; } = new Stack<Card>();
   public Stack<Card> DrawStack { get; set; } = new Stack<Card>();
+  public Stack<Turn> Turns { get; set; } = new Stack<Turn>();
+  public bool IsEnded { get; set; } = false;
 }

@@ -34,4 +34,11 @@ public class GameController : ControllerBase
   {
     return await _service.JoinGame(id, playerId);
   }
+
+  [HttpGet]
+  [Route("/game/{id}/start")]
+  public async Task<Game> Start(string id) 
+  {
+    return await _service.Start(id);
+  }
 }

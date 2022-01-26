@@ -13,6 +13,8 @@ builder.Services.AddSingleton<IGameService, GameService>();
 builder.Services.AddSingleton<IPlayerStore, InMemoryPlayerStore>();
 builder.Services.AddSingleton<IPlayerService, PlayerService>();
 
+builder.Services.AddSingleton<ICardService, MockCardService>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();

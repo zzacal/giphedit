@@ -11,5 +11,5 @@ public class Player {
 
   public string Id { get; set; }
   public string Name { get; set; }
-  public Stack<Card> Hand { get; set; } = new Stack<Card>();
+  public List<Card> Hand { get; set; } = new List<Card>();
 }

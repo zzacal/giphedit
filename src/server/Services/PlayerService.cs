@@ -17,9 +17,9 @@ public class PlayerService : IPlayerService
     return await _store.Get(id) ?? await _store.Create(string.Empty);
   }
 
-  public async Task<Player> New()
+  public async Task<Player> New(string name)
   {
-    return await _store.Create(string.Empty);
+    return await _store.Create(name);
   }
 
   public async Task<Player> Rename(string id, string name)

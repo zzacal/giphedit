@@ -1,15 +1,17 @@
 using System.Collections.Generic;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Giphedit.Models;
 
 public class Player {
-  public Player(string id, string name)
+  public Player(string name)
   {
-    Id = id;
     Name = name;    
   }
 
-  public string Id { get; set; }
+  [BsonRepresentation(BsonType.ObjectId)]
+  public string? Id { get; set; }
   public string Name { get; set; }
   public List<Card> Hand { get; set; } = new List<Card>();
 }

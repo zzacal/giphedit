@@ -19,7 +19,11 @@ builder.Services.AddSingleton<IGameStore>(
 
 builder.Services.AddSingleton<IGameService, GameService>();
 
-builder.Services.AddSingleton<IPlayerStore, InMemoryPlayerStore>();
+builder.Services.AddSingleton<IPlayerStore>(
+  new MongoPlayerStore(configuration["MongoDb:Host"], 
+    configuration["MongoDb:Username"],
+    configuration["MongoDb:Password"],
+    configuration["MongoDb:Database"]));
 builder.Services.AddSingleton<IPlayerService, PlayerService>();
 
 builder.Services.AddSingleton<IGifClient>(new GiphyClient(configuration["Giphy:Key"]));

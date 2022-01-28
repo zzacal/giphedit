@@ -10,7 +10,11 @@ public class InMemoryPlayerStore : IPlayerStore
   private readonly Dictionary<string, Player> _players = new Dictionary<string, Player>();
   public Task<Player> Create(string name)
   {
-    var player = new Player(Guid.NewGuid().ToString(), name);
+    var player = new Player(name) 
+    { 
+      Id = Guid.NewGuid().ToString() 
+    };
+    
     _players.Add(player.Id, player);
     return Task.FromResult(player);
   }
@@ -22,7 +26,7 @@ public class InMemoryPlayerStore : IPlayerStore
 
   public Task<Player?> Update(Player player)
   {
-    if(_players.ContainsKey(player.Id))
+    if(player.Id != null && _players.ContainsKey(player.Id))
     {
       _players[player.Id] = player;
       return Task.FromResult<Player?>(player);

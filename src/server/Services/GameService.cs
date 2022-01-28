@@ -33,7 +33,7 @@ public class GameService : IGameService
     var result = await _games.Update(game);
     if (result == null)
     {
-      throw new GameNotFoundException(game.Id);
+      throw new GameNotFoundException(game.Id ?? string.Empty);
     }
     return result;
   }
@@ -62,6 +62,7 @@ public class GameService : IGameService
     }
     return game;
   }
+
   public async Task<Game> Judge(string gameId, string playerId, string cardId) {
     var game = await GetGameOrThrow(gameId);
     var turn = game.Turns.Peek();
@@ -110,7 +111,7 @@ public class GameService : IGameService
     var playerCardCount = countPlayerHandCards(game.Players.Count, playerHandSize);
 
     // Retrieve and hand-out cards
-    var cards = await _cards.GetCards(turnCount + drawStackCount + playerCardCount);
+    var cards = await _cards.GetCards(turnCount + drawStackCount + playerCardCount, game.Rating);
     game.TurnCardStack = new Stack<Card>(cards.Skip(0).Take(turnCount));
     game.DrawStack = new Stack<Card>(cards.Skip(turnCount).Take(drawStackCount));
     for (var x = 0; x < game.Players.Count; x++) 
@@ -153,7 +154,7 @@ public class GameService : IGameService
 
   public async Task<Game> CreateGame()
   {
-    var game = new Game(string.Empty, RandomStringProvider.Get(5));
+    var game = new Game(RandomStringProvider.Get(5));
     return await _games.Create(game);
   }
 
@@ -173,7 +174,7 @@ public static class RandomStringProvider
   static string chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   public static string Get(int length)
   {
-    return new string(Enumerable.Repeat(chars, length)
-      .Select(s => s[random.Next(s.Length)]).ToArray());
+    return new string(Enumerable.Repeat(0, length)
+      .Select(_ => chars[random.Next(chars.Length)]).ToArray());
   }
 }

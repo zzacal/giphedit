@@ -1,3 +1,5 @@
+using System;
+using Giphedit.Gifs;
 using Giphedit.Services;
 using Giphedit.Stores;
 using Microsoft.AspNetCore.Builder;
@@ -6,14 +8,22 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
 // Add services to the container.
-builder.Services.AddSingleton<IGameStore, InMemoryGameStore>();
+builder.Services.AddSingleton<IGameStore>(
+  new MongoGameStore(configuration["MongoDb:Host"], 
+    configuration["MongoDb:Username"],
+    configuration["MongoDb:Password"],
+    configuration["MongoDb:Database"]));
+
 builder.Services.AddSingleton<IGameService, GameService>();
 
 builder.Services.AddSingleton<IPlayerStore, InMemoryPlayerStore>();
 builder.Services.AddSingleton<IPlayerService, PlayerService>();
 
-builder.Services.AddSingleton<ICardService, MockCardService>();
+builder.Services.AddSingleton<IGifClient>(new GiphyClient(configuration["Giphy:Key"]));
+builder.Services.AddSingleton<ICardService, CardService>();
 
 builder.Services.AddControllersWithViews();
 

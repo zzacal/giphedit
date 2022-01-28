@@ -1,17 +1,19 @@
-using System.Collections.Generic;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Giphedit.Models;
 
 public class Game
 {
-  public Game(string id, string name)
+  public Game(string name)
   {
-    Id = id;
     Name = name;
   }
 
-  public string Id { get; set; }
+  [BsonRepresentation(BsonType.ObjectId)]
+  public string? Id { get; set; }
   public string Name { get; set; }
+  public string Rating { get; set; } = "g";
   public List<Player> Players { get; set; } = new List<Player>();
   public Stack<Card> TurnCardStack { get; set; } = new Stack<Card>();
   public Stack<Card> DrawStack { get; set; } = new Stack<Card>();

@@ -6,7 +6,7 @@ namespace Giphedit.Services;
 
 public class MockCardService : ICardService
 {
-  public Task<IEnumerable<Card>> GetCards(int count)
+  public Task<IEnumerable<Card>> GetCards(int count, string rating)
   {
     var cards = new Card[count];
     for(var i = 0; i < count; i++) 

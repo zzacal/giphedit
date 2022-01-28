@@ -25,7 +25,7 @@ public class InMemoryGameStore : IGameStore
 
   public Task<Game?> Update(Game game)
   {
-    if(_games.ContainsKey(game.Id)) {
+    if(game.Id != null && _games.ContainsKey(game.Id)) {
       _games[game.Id] = game;
       return Task.FromResult<Game?>(game);
     }

@@ -18,5 +18,6 @@ public class Game
   public Stack<Card> TurnCardStack { get; set; } = new Stack<Card>();
   public Stack<Card> DrawStack { get; set; } = new Stack<Card>();
   public Stack<Turn> Turns { get; set; } = new Stack<Turn>();
+  public bool IsStarted { get; set; } = false;
   public bool IsEnded { get; set; } = false;
 }

@@ -116,6 +116,8 @@ public class GameService : IGameService
       game.Players[x].Hand = cards.Skip(taken).Take(playerHandSize).ToList();
     }
 
+    game.IsStarted = true;
+
     return await UpdateGame(AdvanceTurn(game));
   }
 

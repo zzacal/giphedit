@@ -1,3 +1,7 @@
-export const Card = ({src}) => {
-  return <span className="card" ><img src={src} alt="card option"/></span>;
+export const Card = ({ src, isSelected, onClick }) => {
+  return (
+    <span className={`card ${isSelected ? "selected" : ""}`} onClick={onClick}>
+      <img src={src} alt="card option" />
+    </span>
+  );
 };

@@ -2,7 +2,11 @@ import { Hand, Prompt } from ".";
 import "./game.css";
 export const Game = ({ game, player }) => {
   const { hand } = game.players.filter((p) => p.id === player.id)[0];
-  const onPlay = () => {};
+  const onPlay = (pick) => {
+    console.log(pick);
+    console.log(player.id);
+    console.log(game.id);
+  };
   return (
     <>
       <Prompt
@@ -10,7 +14,7 @@ export const Game = ({ game, player }) => {
         turn={game.turns[0]}
         players={game.players}
       />
-      <Hand cards={hand} onPlay={onPlay} />
+      <Hand cards={hand} onLock={onPlay} />
     </>
   );
 };

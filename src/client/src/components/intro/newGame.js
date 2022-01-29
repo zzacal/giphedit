@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-export const JoinGame = ({ playerName, onCreate, onJoin }) => {
+export const JoinGame = ({ name, onCreate, onJoin }) => {
   const [gameId, setGameId] = useState("");
   return <>
-    <h1>welcome, {playerName || "player"}!</h1>
+    <h1>a game, {name || "player"}?</h1>
     <div><button className="btn-primary" onClick={onCreate}>Create</button></div>
     <div>
       <input type="text" className="input-primary" placeholder="search" onChange={e => setGameId(e.target.value)}></input>

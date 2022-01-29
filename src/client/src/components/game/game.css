@@ -1,14 +1,7 @@
 .prompt {
   display: flex;
 }
-.prompt .players .nameplate {
-  margin-bottom: .5em;
-  color: #333;
-  background-color: #8ad7e9;  
-  border: 1px solid #333;
-  border-radius: .25em;
-  padding: .25em .5em;
-}
+
 .prompt .prompt-card {
   margin-left: auto;
   margin-right: auto;
@@ -16,7 +9,7 @@
   height:25em;
 }
 .prompt-card img {
-  width: auto;
+  width: 100%;
 }
 
 
@@ -34,6 +27,9 @@
   padding: 1em;
 }
 .card:hover {
-  background-color: #1861ac;
+  background-color: #eeb871;
   cursor: pointer;
+}
+.card.selected {
+  background-color: #eca344;
 }

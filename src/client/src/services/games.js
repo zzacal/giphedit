@@ -1,8 +1,8 @@
 export class Games {
   url = ""
-  find = (name) => {}
+  find = (name) => game;
   get = (gameId) => game;
-  join = (gameId, playerId) => {}
+  join = (gameId, playerId) => game;
   start = (gameId) => ({...game, isStarted: true});
   play = (gameId) => {}
   judge = (gameId, playerId, cardId) => {}

@@ -14,15 +14,21 @@ export const Home = ({ gameId, playerId }) => {
   }
 
   const onNewGame = () => {
-    setGame(games.get());
+    const game = games.get();
+    onGameFound(game, player);
   }
 
-  const onJoinGame = () => {
-    setGame(games.find());
+  const onJoinGame = (name) => {
+    const game = games.find(name);
+    onGameFound(game, player);
+  }
+
+  const onGameFound = (game, player) => {
+    setGame(games.join(game.id, player.id));
   }
 
   const onStart = () => {
-    setGame(games.start());
+    setGame(games.start(game.id));
   }
 
   if(!player){

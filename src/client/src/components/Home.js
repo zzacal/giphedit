@@ -1,34 +1,38 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Games, Players } from "../services";
+import { Game } from './game';
+import { JoinGame, Lobby, NewPlayer } from './intro';
 
-export class Home extends Component {
-  static displayName = Home.name;
-  games = new Games();
-  players = new Players();
+export const Home = ({ gameId, playerId }) => {
+  const [game, setGame] = useState(null);
+  const [player, setPlayer] = useState(null);
+  const displayName = Home.name;
+  const games = new Games();
+  const players = new Players();
 
-  onNewGame = () => {
-    this.games.get();
+  const onNewPlayer = (name) => {
+    setPlayer(players.new(name));
   }
 
-  onJoinGame = () => {
-    console.log("join game");
+  const onNewGame = () => {
+    setGame(games.get());
   }
 
-  setGame = (game) => {
-    console.log(game);
+  const onJoinGame = () => {
+    setGame(games.find());
   }
 
-  render = () => (
-    <>
-      <h1>Hi there!!</h1>
-      <div>
-        <button onClick={this.onNewGame}>New Game</button>
-      </div>
-      <div>
-        <input type="text"></input>
-        <button onClick={this.onJoinGame}>Join</button>
-      </div> 
-      <img src="https://media4.giphy.com/media/EIV7o5wWLOd26lmeI2/giphy.gif?cid=c4feef10ajhqk4kovkuy8zvzeb3wm96tv6cj7g9ly074trfg&rid=giphy.gif&ct=g" />
-    </>
-  )
+  const onStart = () => {
+    setGame(games.start());
+  }
+
+  if(!player){
+    return <NewPlayer onSubmit={onNewPlayer} />
+  } else if (!game) {
+    return <JoinGame name={player.name} onCreate={onNewGame} onJoin={onJoinGame} />
+  } else if (!game.isStarted) {
+    return <Lobby game={game} onStart={onStart} />
+  } else {
+    return <Game player={player} game={game} />
+  }
 }

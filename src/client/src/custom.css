@@ -1,6 +1,6 @@
 /* Provide sufficient contrast against white background */
 a {
-  color: #0366d6;
+  color: #1861ac;
 }
 
 code {
@@ -8,7 +8,27 @@ code {
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
+  color: #000;
+  background-color: #eec48d;
   border-color: #1861ac;
+  border-radius: .25em;
+  padding: .25em 1em;
+}
+.btn-primary:hover {
+  color: #fff;
+  background-color: #1861ac;
+}
+
+.input-primary {
+  border-radius: .25em;
+  padding: .25em .5em;
+}
+
+.tag {
+  display: inline-block;
+  color:rgb(0, 0, 0);
+  background-color: #82d8ad;
+  margin-right: 1em;
+  padding: .25em .5em;
+  border-radius: .15em;
 }

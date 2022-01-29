@@ -1,6 +1,6 @@
-export const Game = ({game}) => {
-  return 
-  <>
-    {game}
+export const Game = ({game, player}) => {
+  console.log(game);
+  return <>
+    {game.id}
   </>
 }

@@ -1,13 +1,32 @@
 .prompt {
-  text-align: center;
+  display: flex;
 }
+.prompt .players .nameplate {
+  margin-bottom: .5em;
+  color: #333;
+  background-color: #8ad7e9;  
+  border: 1px solid #333;
+  border-radius: .25em;
+  padding: .25em .5em;
+}
+.prompt .prompt-card {
+  margin-left: auto;
+  margin-right: auto;
+  width:25em;
+  height:25em;
+}
+.prompt-card img {
+  width: auto;
+}
+
+
 .hand {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
   margin: 2em 0;
-  gap: 2em;
+  gap: .5em;
 }
 .card {
   background-color: #eec48d;

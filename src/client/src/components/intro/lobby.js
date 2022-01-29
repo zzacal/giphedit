@@ -5,7 +5,7 @@ export const Lobby = ({ game, player, onStart }) => {
       <div>
         <h2>players:</h2>
         {game.players.map((p) => (
-          <span key={p.id} className="tag">{p.id == player.id ? "you: " : ""}{p.name}</span>
+          <span key={p.id} className="tag">{p.id === player.id ? "you: " : ""}{p.name}</span>
         ))}
       </div>
       <div>

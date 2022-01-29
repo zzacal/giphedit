@@ -1,3 +1,3 @@
 export const Card = ({src}) => {
-  return <span className="card" ><img src={src} /></span>;
+  return <span className="card" ><img src={src} alt="card option"/></span>;
 };

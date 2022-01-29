@@ -1,18 +1,16 @@
-import { Card } from ".";
-import "./game.css"
+import { Hand, Prompt } from ".";
+import "./game.css";
 export const Game = ({ game, player }) => {
-  console.log(game);
-  console.log(player);
-  const { hand } = game.players.filter( p => p.id === player.id)[0];
+  const { hand } = game.players.filter((p) => p.id === player.id)[0];
+  const onPlay = () => {};
   return (
     <>
-      {game.id}
-      <div className="prompt">
-        <img src={game.turns[0].card.imgUrl} />
-      </div>
-      <div className="hand">
-        {hand.map(c => <Card key={c.imgUrl} src={c.imgUrl} />)}
-      </div>
+      <Prompt
+        src={game.turns[0].card.imgUrl}
+        turn={game.turns[0]}
+        players={game.players}
+      />
+      <Hand cards={hand} onPlay={onPlay} />
     </>
   );
 };

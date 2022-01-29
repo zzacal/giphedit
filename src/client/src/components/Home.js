@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { Games, Players } from "../services";
 import { Game } from './game';
 import { JoinGame, Lobby, NewPlayer } from './intro';
@@ -6,7 +6,6 @@ import { JoinGame, Lobby, NewPlayer } from './intro';
 export const Home = ({ gameId, playerId }) => {
   const [game, setGame] = useState(null);
   const [player, setPlayer] = useState(null);
-  const displayName = Home.name;
   const games = new Games();
   const players = new Players();
 

@@ -31,7 +31,7 @@ export const Home = ({ gameId, playerId }) => {
   } else if (!game) {
     return <JoinGame name={player.name} onCreate={onNewGame} onJoin={onJoinGame} />
   } else if (!game.isStarted) {
-    return <Lobby game={game} onStart={onStart} />
+    return <Lobby game={game} player={player} onStart={onStart} />
   } else {
     return <Game player={player} game={game} />
   }

@@ -19,12 +19,30 @@
   align-items: center;
   justify-content: center;
   margin: 2em 0;
-  gap: .5em;
+  gap: .1em;
 }
 .card {
   background-color: #eec48d;
-  width: 15em;
-  padding: 1em;
+  width: 8em;
+  padding: .2em;
+}
+@media only screen and (min-width: 769px) {
+  .hand {
+    gap: .25em
+  }
+  .card {
+    width: 10em;
+    padding: .5em;
+  }
+}
+@media only screen and (min-width: 992px) {
+  .hand {
+    gap: .5em
+  }
+  .card {
+    width: 13em;
+    padding: .75em;
+  }
 }
 .card:hover {
   background-color: #eeb871;

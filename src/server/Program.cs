@@ -1,4 +1,5 @@
 using Giphedit.Gifs;
+using Giphedit.Hubs;
 using Giphedit.Services;
 using Giphedit.Stores;
 
@@ -26,6 +27,7 @@ builder.Services.AddSingleton<IGifClient>(new GiphyClient(configuration["Giphy:K
 builder.Services.AddSingleton<ICardService, CardService>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -44,6 +46,8 @@ app.UseRouting();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
+
+app.MapHub<PlayHub>("/play");
 
 app.MapFallbackToFile("index.html");
 

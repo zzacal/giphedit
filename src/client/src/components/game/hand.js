@@ -8,13 +8,14 @@ export const Hand = ({ cards, onLock }) => {
         {cards.map((c) => (
           <Card
             key={c.id}
+            id={c.id}
             src={c.imgUrl}
             isSelected={pick === c.id}
             onClick={() => setPick(c.id)}
+            onLock={() => onLock(c.id)}
           />
         ))}
       </div>
-      <button className="btn-primary" onClick={() => onLock(pick)}>Play</button>
     </>
   );
 };

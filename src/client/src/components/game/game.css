@@ -33,3 +33,18 @@
 .card.selected {
   background-color: #eca344;
 }
+.btn-play {
+  border: none;
+  box-shadow: none;
+  width: 100px;
+  border-radius: .25em;
+  background-color: #82df7d;
+}
+.card.selected .btn-play {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  top: 60%;
+}

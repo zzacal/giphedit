@@ -1,8 +1,8 @@
 export class Players {
   url = ""
-  new = (name) => ({...player, name})
-  get = (playerId) => {}
-  rename = (playerId) => {}
+  new = (name) => (Promise.resolve({...player, name}))
+  get = (playerId) => (Promise.resolve({...player}))
+  rename = (playerId) => (Promise.resolve({...player}))
 }
 
 const player = {

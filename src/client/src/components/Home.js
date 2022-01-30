@@ -9,26 +9,29 @@ export const Home = ({ gameId, playerId }) => {
   const games = new Games();
   const players = new Players();
 
-  const onNewPlayer = (name) => {
-    setPlayer(players.new(name));
+  const onNewPlayer = async (name) => {
+    const result = await players.new(name);
+    setPlayer(result);
   }
 
-  const onNewGame = () => {
-    const game = games.get();
-    onGameFound(game, player);
+  const onNewGame = async () => {
+    const result = await games.get();
+    onGameFound(result, player);
   }
 
-  const onJoinGame = (name) => {
-    const game = games.find(name);
-    onGameFound(game, player);
+  const onJoinGame = async (name) => {
+    const result = await games.find(name);
+    onGameFound(result, player);
   }
 
-  const onGameFound = (game, player) => {
-    setGame(games.join(game.id, player.id));
+  const onGameFound = async (game, player) => {
+    var result = await games.join(game.id, player.id);
+    setGame(result);
   }
 
-  const onStart = () => {
-    setGame(games.start(game.id));
+  const onStart = async () => {
+    const result = await games.start(game.id);
+    setGame(result);
   }
 
   if(!player){

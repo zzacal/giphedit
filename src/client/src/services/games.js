@@ -1,9 +1,9 @@
 export class Games {
   url = ""
-  find = (name) => game;
-  get = (gameId) => game;
-  join = (gameId, playerId) => game;
-  start = (gameId) => ({...game, isStarted: true});
+  find = (name) => Promise.resolve(game);
+  get = (gameId) => Promise.resolve(game);
+  join = (gameId, playerId) => Promise.resolve(game);
+  start = (gameId) => Promise.resolve({...game, isStarted: true});
   play = (gameId) => {}
   judge = (gameId, playerId, cardId) => {}
 }

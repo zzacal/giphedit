@@ -1,4 +1,4 @@
-import "./lobby.css";
+import "./lobby.scss";
 
 export const Lobby = ({ game, player, onStart }) => {
   return (

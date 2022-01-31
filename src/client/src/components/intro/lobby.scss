@@ -18,7 +18,9 @@
   background-color: rgb(69, 69, 69);
 }
 
-.lobby .players {
-  display: flex;
-  gap: .5em;
+.lobby {
+  .players {
+    display: flex;
+    gap: .5em;
+  }
 }

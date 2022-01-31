@@ -1,5 +1,5 @@
 import { Hand, Prompt } from ".";
-import "./game.css";
+import "./game.scss";
 export const Game = ({ game, player }) => {
   const { hand } = game.players.filter((p) => p.id === player.id)[0];
   const onPlay = (pick) => {

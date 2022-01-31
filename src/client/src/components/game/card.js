@@ -3,8 +3,8 @@ export const Card = ({ id, src, isSelected, onClick, onLock }) => {
     <span className={`card ${isSelected ? "selected" : ""}`} onClick={onClick}>
       <img src={src} alt="card option" />
       {isSelected ?
-        <button className="btn-play" onClick={onLock}>
-          Play?
+        <button className="btn-play glow" onClick={onLock}>
+          lock in
         </button>
         : null}
     </span>

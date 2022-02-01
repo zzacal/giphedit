@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { Games, Players } from "../services";
+import services from "../services";
 import { Game } from './game';
 import { JoinGame, Lobby, NewPlayer } from './intro';
 
 export const Home = ({ gameId, playerId }) => {
+  console.log("Home rendered");
   const [game, setGame] = useState(null);
   const [player, setPlayer] = useState(null);
-  const games = new Games();
-  const players = new Players();
+  const games = services.getGameService();
+  const players = services.getPlayerService();
+  const hub = services.getGameHub(setGame);
 
   const onNewPlayer = async (name) => {
     const result = await players.new(name);
@@ -25,8 +27,7 @@ export const Home = ({ gameId, playerId }) => {
   }
 
   const onGameFound = async (game, player) => {
-    var result = await games.join(game.id, player.id);
-    setGame(result);
+    hub.join(game.id, player.id);
   }
 
   const onStart = async () => {

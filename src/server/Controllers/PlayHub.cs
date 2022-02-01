@@ -9,6 +9,13 @@ public class PlayHub : Hub
   public PlayHub(ILogger<PlayHub> logger, GameService gameService){
     _games = gameService;
   }
+
+  public async Task Join(string gameId, string playerId)
+  {
+    var result = await _games.JoinGame(gameId, playerId);
+    await Clients.All.SendAsync("ReceiveGame", result);
+  }
+  
   public async Task SendMessage(string gameId, string playerId, string message)
   {
     await Clients.All.SendAsync("ReceiveMessage", gameId, playerId, message);

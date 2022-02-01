@@ -5,13 +5,12 @@
 .prompt .prompt-card {
   margin-left: auto;
   margin-right: auto;
-  width:25em;
-  height:25em;
+  width: 25em;
+  height: 25em;
 }
 .prompt-card img {
   width: 100%;
 }
-
 
 .hand {
   display: flex;
@@ -19,25 +18,25 @@
   align-items: center;
   justify-content: center;
   margin: 2em 0;
-  gap: .1em;
+  gap: 0.1em;
   @media only screen and (min-width: 769px) {
-      gap: .25em
+    gap: 0.25em;
   }
   @media only screen and (min-width: 992px) {
-    gap: .5em
+    gap: 0.5em;
   }
 }
 .card {
   background-color: #eec48d;
   width: 8em;
-  padding: .2em;
+  padding: 0.2em;
   @media only screen and (min-width: 769px) {
-      width: 10em;
-      padding: .5em;
+    width: 10em;
+    padding: 0.5em;
   }
   @media only screen and (min-width: 992px) {
     width: 13em;
-    padding: .75em;
+    padding: 0.75em;
   }
   &:hover {
     background-color: #eeb871;
@@ -60,6 +59,6 @@
   border: none;
   box-shadow: none;
   width: 100px;
-  border-radius: .25em;
+  border-radius: 0.25em;
   background-color: #59d552;
 }

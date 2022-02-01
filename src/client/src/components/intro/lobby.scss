@@ -3,11 +3,12 @@
   display: flex;
   gap: 1em;
 }
-.btn-like, .btn-dislike {
+.btn-like,
+.btn-dislike {
   font-size: 2em;
-  border-radius: .25em;
+  border-radius: 0.25em;
   background-color: rgb(187, 8, 8);
-  padding: .1em .5em;
+  padding: 0.1em 0.5em;
   border: 0;
   box-shadow: none;
 }
@@ -21,6 +22,6 @@
 .lobby {
   .players {
     display: flex;
-    gap: .5em;
+    gap: 0.5em;
   }
 }

@@ -1,6 +1,8 @@
 import { Hand, Prompt } from ".";
 import "./game.scss";
 export const Game = ({ game, player }) => {
+  
+  console.log("Game rendered");
   const { hand } = game.players.filter((p) => p.id === player.id)[0];
   const onPlay = (pick) => {
     console.log(pick);

@@ -5,8 +5,8 @@ namespace Giphedit.Hubs;
 
 public class PlayHub : Hub
 {
-  private readonly GameService _games;
-  public PlayHub(ILogger<PlayHub> logger, GameService gameService){
+  private readonly IGameService _games;
+  public PlayHub(ILogger<PlayHub> logger, IGameService gameService){
     _games = gameService;
   }
 
@@ -30,6 +30,12 @@ public class PlayHub : Hub
   public async Task Judge(string gameId, string playerId, string cardId)
   {
     var result = await _games.Judge(gameId, playerId, cardId);
+    await Clients.All.SendAsync("ReceiveGame", result);
+  }
+
+  public async Task Start(string id) 
+  {
+    var result = await _games.Start(id);
     await Clients.All.SendAsync("ReceiveGame", result);
   }
 }

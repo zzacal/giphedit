@@ -27,12 +27,12 @@ export const Home = ({ gameId, playerId }) => {
   }
 
   const onGameFound = async (game, player) => {
-    hub.join(game.id, player.id);
+    await hub.join(game.id, player.id);
   }
 
   const onStart = async () => {
-    const result = await games.start(game.id);
-    setGame(result);
+    console.log("attempting to start");
+    await hub.start(game.id);
   }
 
   if(!player){

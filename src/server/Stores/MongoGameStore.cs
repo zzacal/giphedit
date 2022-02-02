@@ -16,8 +16,22 @@ public class MongoGameStore : IGameStore
   public async Task<Game> Create(Game game)
   {
     await _collection.InsertOneAsync(game);
+    if(game.Id == null) {
+      throw new Exception("Unable to get game id");
+    }
+    var result = await Get(game.Id);
 
-    return game;
+    if(result == null) {
+      throw new Exception("Unable to get game id");
+    }
+
+    return result;
+  }
+
+  public async Task<Game?> Find(string name)
+  {
+    var found = await _collection.FindAsync(g => g.Name == name);
+    return await found.FirstOrDefaultAsync();
   }
 
   public async Task<Game?> Get(string id)
@@ -30,6 +44,8 @@ public class MongoGameStore : IGameStore
   {
     var filter = Builders<Game>.Filter.Eq(g => g.Id, game.Id);
     var found = await _collection.FindOneAndReplaceAsync(filter, game);
-    return found;
+    var result = await _collection.FindAsync(filter);
+
+    return result.First();
   }
 }

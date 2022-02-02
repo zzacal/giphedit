@@ -118,7 +118,9 @@ public class GameService : IGameService
 
     game.IsStarted = true;
 
-    return await UpdateGame(AdvanceTurn(game));
+    var result = await UpdateGame(AdvanceTurn(game));
+    Console.WriteLine(result);
+    return result;
   }
 
   public async Task<Game> JoinGame(string gameId, string playerId)
@@ -164,6 +166,10 @@ public class GameService : IGameService
     return await _games.Get(gameId) ?? await CreateGame();
   }
 
+  public async Task<Game?> FindGame(string name)
+  {
+    return await _games.Find(name);
+  }
 }
 
 public static class RandomStringProvider

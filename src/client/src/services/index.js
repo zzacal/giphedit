@@ -3,6 +3,9 @@ import { Games } from "./games"
 import { Players } from "./players";
 
 class Services {
+  constructor(){
+    console.log("Services instantiated")
+  }
   getGameService = () => {
     if(this.game) {
       return this.game

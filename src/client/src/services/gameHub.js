@@ -1,24 +1,38 @@
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
 export class GameHub {
+  started = false;
   constructor(setGame) {
-    this.connection = new HubConnectionBuilder().withUrl("play").build();
+    this.connection = new HubConnectionBuilder().withUrl("https://localhost:7145/play").build();
 
     this.connection.on("ReceiveGame", (data) => {
-      console.log(data);
+      console.log("hub received game", data);
       setGame(data);
     });
-    this.start();
   }
 
-  start = () => {
-    this.connection.start()
-      .then(() => {console.log("SignalR started")})
-      .catch(console.error);
+  connect = async () => {
+    if(this.started) {
+      console.log("No need to start. it's already started")
+      return false;
+    }
+    console.log("Attempting to connect");
+    try {
+      await this.connection.start()
+      console.log("SignalR started");
+      this.started = true;
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   join = async (gameId, playerId) => {
-    await this.start();
+    await this.connect();
     this.connection.send("join", gameId, playerId);
+  }
+  
+  start = async (gameId) => {
+    console.log("hub starting")
+    this.connection.send("start", gameId);
   }
 }

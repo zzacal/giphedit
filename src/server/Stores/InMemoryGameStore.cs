@@ -17,6 +17,11 @@ public class InMemoryGameStore : IGameStore
     return Task.FromResult(game);
   }
 
+  public Task<Game?> Find(string name)
+  {
+    return Task.FromResult(_games.Values.FirstOrDefault(g=>g.Name == name));
+  }
+
   public Task<Game?> Get(string id)
   {
     _games.TryGetValue(id, out var game);

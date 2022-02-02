@@ -55,6 +55,13 @@ app.UseStaticFiles();
 app.UseRouting();
 
 
+app.UseCors(builder => builder
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .SetIsOriginAllowed((host) => true)
+    .AllowCredentials()
+  );
+  
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
@@ -63,6 +70,5 @@ app.MapHub<PlayHub>("/play");
 
 app.MapFallbackToFile("index.html");
 
-app.UseCors(MyAllowSpecificOrigins);
 
 app.Run();

@@ -31,8 +31,11 @@ export const Home = ({ gameId, playerId }) => {
   }
 
   const onStart = async () => {
-    console.log("attempting to start");
     await hub.start(game.id);
+  }
+
+  const onPlay = async (cardId) => {
+    await hub.play(game.id, player.id, cardId)
   }
 
   if(!player){
@@ -42,6 +45,6 @@ export const Home = ({ gameId, playerId }) => {
   } else if (!game.isStarted) {
     return <Lobby game={game} player={player} onStart={onStart} />
   } else {
-    return <Game player={player} game={game} />
+    return <Game player={player} game={game} onPlay={onPlay}/>
   }
 }

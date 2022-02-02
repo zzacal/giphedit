@@ -35,4 +35,14 @@ export class GameHub {
     console.log("hub starting")
     this.connection.send("start", gameId);
   }
+
+  play = async (gameId, playerId, cardId) => {
+    console.log("hub playing")
+    this.connection.send("play", gameId, playerId, cardId);
+  }
+
+  judge = async (gameId, playerId, cardId) => {
+    console.log("hub judging")
+    this.connection.send("judge", gameId, playerId, cardId)
+  }
 }

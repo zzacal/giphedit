@@ -1,14 +1,22 @@
-import { Hand, Prompt } from ".";
+import { Card, Hand, Prompt } from ".";
 import "./game.scss";
-export const Game = ({ game, player }) => {
-  
+export const Game = ({ game, player, onPlay }) => {
   console.log("Game rendered");
-  const { hand } = game.players.filter((p) => p.id === player.id)[0];
-  const onPlay = (pick) => {
-    console.log(pick);
-    console.log(player.id);
-    console.log(game.id);
-  };
+  const { turns, players } = game;
+  const { hand } = players.filter((p) => p.id === player.id)[0];
+  const played = turns[0]?.plays?.filter(p => p.playerId = player.id)[0]
+  const turnPlayed = played;
+
+  console.log(turns);
+  const controls = turnPlayed ? (
+    <Card
+      id={played.id}
+      src={played.imgUrl}
+      isSelected={true}
+    />
+  ) : (
+    <Hand cards={hand} onLock={onPlay} />
+  );
   return (
     <>
       <Prompt
@@ -16,7 +24,7 @@ export const Game = ({ game, player }) => {
         turn={game.turns[0]}
         players={game.players}
       />
-      <Hand cards={hand} onLock={onPlay} />
+      {controls}
     </>
   );
 };

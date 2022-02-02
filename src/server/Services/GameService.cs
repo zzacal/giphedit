@@ -92,7 +92,7 @@ public class GameService : IGameService
     player.Hand.Remove(card);
 
     var turn = game.Turns.Peek();
-    turn.Plays.Add(card);
+    turn.Plays.Add(new TurnPlay(cardId, card.ImgUrl, playerId));
     
     return await UpdateGame(game);
   }
@@ -119,7 +119,6 @@ public class GameService : IGameService
     game.IsStarted = true;
 
     var result = await UpdateGame(AdvanceTurn(game));
-    Console.WriteLine(result);
     return result;
   }
 

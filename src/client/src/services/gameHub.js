@@ -6,7 +6,6 @@ export class GameHub {
     this.connection = new HubConnectionBuilder().withUrl("https://localhost:7145/play").build();
 
     this.connection.on("ReceiveGame", (data) => {
-      console.log("hub received game", data);
       setGame(data);
     });
   }

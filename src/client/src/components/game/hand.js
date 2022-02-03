@@ -8,7 +8,7 @@ export const Hand = ({ cards, onLock }) => {
         {cards.map((c) => (
           <Card
             key={c.id}
-            id={c.id}
+            cardId={c.id}
             src={c.imgUrl}
             isSelected={pick === c.id}
             onClick={() => setPick(c.id)}

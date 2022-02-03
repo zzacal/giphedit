@@ -4,10 +4,9 @@ export const Game = ({ game, player, onPlay }) => {
   console.log("Game rendered");
   const { turns, players } = game;
   const { hand } = players.filter((p) => p.id === player.id)[0];
-  const played = turns[0]?.plays?.filter(p => p.playerId = player.id)[0]
+  const played = turns[0]?.plays?.filter(p => p.playerId === player.id)[0]
   const turnPlayed = played;
 
-  console.log(turns);
   const controls = turnPlayed ? (
     <Card
       id={played.id}
@@ -19,6 +18,9 @@ export const Game = ({ game, player, onPlay }) => {
   );
   return (
     <>
+      <div>{`game: ${game.id}`}</div>
+      <div>{`player: ${player.id}`}</div>
+      
       <Prompt
         src={game.turns[0].card.imgUrl}
         turn={game.turns[0]}

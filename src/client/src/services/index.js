@@ -1,5 +1,6 @@
 import { GameHub } from "./gameHub";
 import { Games } from "./games"
+import { Persist } from "./persist";
 import { Players } from "./players";
 
 class Services {
@@ -29,6 +30,14 @@ class Services {
     this.gameHub = new GameHub(setGame);
     console.log(`game hub created`);
     return this.getGameHub(setGame);
+  }
+  getPersistence = () => {
+    if(this.persistence) {
+      return this.persistence;
+    }
+    this.persistence = new Persist();
+    console.log("Persist service created");
+    return this.getPersistence();
   }
 }
 

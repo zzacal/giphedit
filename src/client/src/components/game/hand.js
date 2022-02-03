@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Card } from ".";
-export const Hand = ({ cards, onLock }) => {
-  const [pick, setPick] = useState(cards[0].id);
+export const Hand = ({ label, cards, onLock }) => {
+  const [pick, setPick] = useState(cards[0]?.id);
   return (
     <>
+      <h3>{label}</h3>
       <div className="hand">
-        {cards.map((c) => (
+        {cards && cards.length && cards.map((c) => (
           <Card
             key={c.id}
             cardId={c.id}

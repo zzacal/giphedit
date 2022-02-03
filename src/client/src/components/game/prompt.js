@@ -1,11 +1,11 @@
-export const Prompt = ({ turn, players, src }) => {
+export const Prompt = ({ turn, players, scores, src }) => {
   return (
     <div className="prompt">
       <div className="players">
         players:
         {players.map((p) => (
           <div key={p.id} className="nameplate">
-            {p.name}{turn.judge.id === p.id ? " 👑" : " ⏰"}
+            {turn.judge.id === p.id ? " 👑" : " ⏰"}{p.name} : {scores.get(p.id)}
           </div>
         ))}
       </div>

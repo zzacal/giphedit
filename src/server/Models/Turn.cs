@@ -12,5 +12,5 @@ public class Turn
   public Card Card { get; set; }
   public Player Judge { get; set; }
   public List<TurnPlay> Plays { get; set; } = new List<TurnPlay>();
-  public Card? Winner { get; set; }
+  public TurnPlay? Winner { get; set; }
 }

@@ -41,7 +41,8 @@ public class GameService : IGameService
     }
 
     var nextJudgeIndex = 
-      game.Turns.TryPeek(out var last) && game.Players.FindIndex(p => p.Id == last.Judge.Id) < game.Players.Count 
+      game.Turns.TryPeek(out var last) && 
+      game.Players.FindIndex(p => p.Id == last.Judge.Id) < game.Players.Count - 1
         ? game.Players.FindIndex(p => p.Id == last.Judge.Id) + 1
         : 0;
     var next = new Turn(nextCard, game.Players[nextJudgeIndex]);
@@ -100,6 +101,10 @@ public class GameService : IGameService
   public async Task<Game> Start(string gameId)
   {
     var game = await GetGameOrThrow(gameId);
+    
+    if(game.IsStarted){
+      return game;
+    }
 
     // Calculate cahdz needed
     var turnCount = countTurns(game.Players.Count, turnPerPlayer);

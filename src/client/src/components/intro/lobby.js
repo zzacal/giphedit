@@ -1,21 +1,66 @@
+import { useState } from "react";
+import { NamePlate } from "../game/namePlate";
 import "./lobby.scss";
 
 export const Lobby = ({ game, player, onStart }) => {
+  const [turns, setTurns] = useState(2);
+  const [hand, setHand] = useState(4);
+  const [rating, setRating] = useState("g");
+  const owner = game.players[0].id;
+
   return (
     <div className="lobby">
-      <h1><button onClick={() => navigator.clipboard.writeText(game.name)}>{game.name} 📋</button></h1>
-      <p>send <span className="h2">☝️</span> that <span className="h2">👆</span> to your friends</p>
-      <p>smash that like <span className="h2">(👍)</span> when the gang's all here. <br /> <small>or the dislike button, who cares</small></p>
-      <h2>players:</h2>
+      <h1>
+        <button onClick={() => navigator.clipboard.writeText(game.name)}>
+          {game.name} 📋
+        </button>
+      </h1>
+      
+      <label>players</label>
       <div className="players">
         {game.players.map((p) => (
-          <span key={p.id} className="nameplate">{p.id === player.id ? "you: " : ""}{p.name}</span>
+          <NamePlate key={p.id} name={p.name} score={""} icon={ p.id === owner ? "👑" : "🎩"} />
         ))}
       </div>
+      {
+        owner === player.id ? (<>
+          <div className="game-settings col-10 col-sm-6">
+            <label>
+              turns
+              <input
+                type="number"
+                className="input-primary"
+                value={turns}
+                onChange={(e) => setTurns(e.target.value)}
+              />
+            </label>
+            <label>
+              hand
+              <input
+                type="number"
+                className="input-primary"
+                value={hand}
+                onChange={(e) => setHand(e.target.value)}
+              />
+            </label>
+          </div>
+          <label>rating</label>
+          <div className="game-rating col-10 col-sm-6">
+              <RatingOpt rating="g" current={rating} onSet={setRating} />
+              <RatingOpt rating="pg" current={rating} onSet={setRating} />
+              <RatingOpt rating="pg-13" current={rating} onSet={setRating} />
+              <RatingOpt rating="r" current={rating} onSet={setRating} />
+          </div>    
+        </>) : <></>
+      }
       <div className="sect-start">
-        <button className="btn-dislike" onClick={onStart}>👎</button>
-        <button className="btn-like" onClick={onStart}>👍</button> 
+        <button className="btn-start" onClick={() => onStart(game.id, turns, hand, rating)}>
+          START
+        </button>
       </div>
     </div>
   );
 };
+
+const RatingOpt = ({rating, current, onSet}) => <span className={`rating-opt ${selectedIf(current, rating)}`}     onClick={() => onSet(rating)}>{rating}</span>
+const selectedIf = (expected, actual) => expected === actual ? "selected" : ""

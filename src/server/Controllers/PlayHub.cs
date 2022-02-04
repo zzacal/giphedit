@@ -33,9 +33,9 @@ public class PlayHub : Hub
     await Clients.All.SendAsync("ReceiveGame", result);
   }
 
-  public async Task Start(string id) 
+  public async Task Start(string id, int turns, int handSize, string rating)
   {
-    var result = await _games.Start(id);
+    var result = await _games.Start(id, turns, handSize, rating);
     await Clients.All.SendAsync("ReceiveGame", result);
   }
 }

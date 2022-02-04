@@ -3,25 +3,61 @@
   display: flex;
   gap: 1em;
 }
-.btn-like,
-.btn-dislike {
+.btn-start {
   font-size: 2em;
   border-radius: 0.25em;
-  background-color: rgb(187, 8, 8);
+  color: rgb(243, 243, 229);
+  background-color: rgb(48, 119, 20);
   padding: 0.1em 0.5em;
   border: 0;
   box-shadow: none;
-}
-.btn-like {
-  background-color: rgb(187, 8, 8);
-}
-.btn-dislike {
-  background-color: rgb(69, 69, 69);
 }
 
 .lobby {
   .players {
     display: flex;
     gap: 0.5em;
+  }
+}
+
+.game-settings {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+  label {
+    display: block;
+    width: 48%;
+
+    input {
+      display: block;
+      width: 100%;
+    }
+  }
+}
+.game-rating {
+  display: flex;
+  .rating-opt {
+    cursor: pointer;
+    display: block;
+    border-left: 1px solid rgb(48, 119, 20);
+    border-top: 1px solid rgb(48, 119, 20);
+    border-bottom: 1px solid rgb(48, 119, 20);
+    text-align: center;
+    width: 100%;
+
+    &:first-child {
+      border-top-left-radius: .25em;
+      border-bottom-left-radius: .25em;
+    }
+    &:last-child {
+      border-right: 1px solid rgb(48, 119, 20);
+      border-top-right-radius: .25em;
+      border-bottom-right-radius: .25em;
+    }
+
+    &.selected {
+      color: rgb(243, 243, 229);
+      background-color: rgb(48, 119, 20);
+    }
   }
 }

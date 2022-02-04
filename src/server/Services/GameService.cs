@@ -15,10 +15,6 @@ public class GameService : IGameService
     _cards = cardService;
   }
 
-  // RULES
-  private static int turnPerPlayer = 2;
-  private static int playerHandSize = 7;
-
   // Calculations
   private static int countTurns(int playerCount, int turnsPerPlayer) => playerCount * turnsPerPlayer;
   private static int countDrawStack(int playerCount, int turnsPerPlayer) => countTurns(playerCount, turnsPerPlayer) * (playerCount - 1);
@@ -98,7 +94,7 @@ public class GameService : IGameService
     return await UpdateGame(game);
   }
   
-  public async Task<Game> Start(string gameId)
+  public async Task<Game> Start(string gameId, int turns, int handSize, string rating = "g")
   {
     var game = await GetGameOrThrow(gameId);
     
@@ -107,18 +103,18 @@ public class GameService : IGameService
     }
 
     // Calculate cahdz needed
-    var turnCount = countTurns(game.Players.Count, turnPerPlayer);
-    var drawStackCount = countDrawStack(game.Players.Count, turnPerPlayer);
-    var playerCardCount = countPlayerHandCards(game.Players.Count, playerHandSize);
+    var turnCount = countTurns(game.Players.Count, turns);
+    var drawStackCount = countDrawStack(game.Players.Count, turns);
+    var playerCardCount = countPlayerHandCards(game.Players.Count, handSize);
 
     // Retrieve and hand-out cards
-    var cards = await _cards.GetCards(turnCount + drawStackCount + playerCardCount, game.Rating);
+    var cards = await _cards.GetCards(turnCount + drawStackCount + playerCardCount, rating);
     game.TurnCardStack = new Stack<Card>(cards.Skip(0).Take(turnCount));
     game.DrawStack = new Stack<Card>(cards.Skip(turnCount).Take(drawStackCount));
     for (var x = 0; x < game.Players.Count; x++) 
     {
-      var taken = turnCount + drawStackCount + (x * playerHandSize);
-      game.Players[x].Hand = cards.Skip(taken).Take(playerHandSize).ToList();
+      var taken = turnCount + drawStackCount + (x * handSize);
+      game.Players[x].Hand = cards.Skip(taken).Take(handSize).ToList();
     }
 
     game.IsStarted = true;

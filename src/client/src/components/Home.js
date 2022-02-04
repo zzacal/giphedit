@@ -42,8 +42,8 @@ export const Home = ({ gameId, playerId }) => {
     await hub.join(game.id, player.id);
   };
 
-  const onStart = async () => {
-    await hub.start(game.id);
+  const onStart = async (gameId, turns, hand, rating) => {
+    await hub.start(gameId, turns, hand, rating);
   };
 
   const onPlay = async (cardId) => {

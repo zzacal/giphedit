@@ -39,10 +39,10 @@ public class GameController : ControllerBase
   }
 
   [HttpGet]
-  [Route("/game/{id}/start")]
-  public async Task<Game> Start(string id) 
+  [Route("/game/{id}/start/{turns}/{handSize}/{rating}")]
+  public async Task<Game> Start(string id, int turns, int handSize, string rating) 
   {
-    return await _service.Start(id);
+    return await _service.Start(id, turns, handSize, rating);
   }
 
   [HttpGet]

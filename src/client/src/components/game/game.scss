@@ -1,15 +1,23 @@
 .prompt {
   display: flex;
-}
 
-.prompt .prompt-card {
-  margin-left: auto;
-  margin-right: auto;
-  width: 25em;
-  height: 25em;
-}
-.prompt-card img {
-  width: 100%;
+  .nameplate {
+    text-align: center;
+    .player-attributes {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  .prompt-card {
+    margin-left: auto;
+    margin-right: auto;
+    width: 25em;
+    height: 25em;
+    img {
+      width: 100%;
+    }
+  }
 }
 
 .hand {

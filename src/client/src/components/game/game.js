@@ -4,6 +4,7 @@ export const Game = ({ game, player, onPlay, onJudge }) => {
   console.log("Game rendered");
   const { turns, players } = game;
   const { hand } = players.filter((p) => p.id === player.id)[0];
+  const scores = new Map(players.map(p => [p.id, turns.filter(t => t?.winner?.playerId === p.id).length]));
 
   const isJudging = turns[0]?.judge?.id === player.id
   const played = turns[0]?.plays?.filter((p) => p.playerId === player.id)[0];
@@ -13,15 +14,12 @@ export const Game = ({ game, player, onPlay, onJudge }) => {
   const controls = getControls(isJudging, turns[0].plays, onJudge, isPlaying, hand, onPlay, hasPlayed,  played);
   return (
     <>
-      <div>{`${game.name}: ${game.id}`}</div>
-      <div>{`${player.name}: ${player.id}`}</div>
-      <div>{isJudging ? "judging" : ""}</div>
-      <div>{isPlaying ? "isPlaying" : ""}</div>
-      <div>{hasPlayed ? "hasPlayed" : ""}</div>
+      <h3>{game.name}</h3>
       <Prompt
         src={game.turns[0].card.imgUrl}
         turn={game.turns[0]}
         players={game.players}
+        scores={scores}
       />
       {controls}
     </>

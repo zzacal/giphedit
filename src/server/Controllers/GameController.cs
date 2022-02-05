@@ -18,17 +18,21 @@ public class GameController : ControllerBase
   }
 
   [HttpGet]
+  [Route("/game/find/{name}")]
+  public async Task<Game?> Find(string? name)
+  {
+    if(string.IsNullOrWhiteSpace(name)) {
+      return null;
+    }
+    
+    return await _service.FindGame(name);
+  }
+  
+  [HttpGet]
   [Route("/game/{id?}")]
   public async Task<Game> Get(string? id = null)
   {
     return await _service.GetOrCreateGame(id);
-  }
-
-  [HttpGet]
-  [Route("/game/find/{name}")]
-  public async Task<Game?> Find(string name)
-  {
-    return await _service.FindGame(name);
   }
 
   [HttpGet]

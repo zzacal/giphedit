@@ -36,8 +36,15 @@ public class MongoGameStore : IGameStore
 
   public async Task<Game?> Get(string id)
   {
-    var found = await _collection.FindAsync(g => g.Id == id);
-    return found.First();
+    try
+    {
+      var found = await _collection.FindAsync(g => g.Id == id);
+      return found.First();
+    }
+    catch
+    {
+      return null; 
+    }
   }
 
   public async Task<Game?> Update(Game game)

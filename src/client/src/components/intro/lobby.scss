@@ -1,21 +1,21 @@
+@use "../../color-palette.scss" as colors;
+@use "../../widths.scss" as widths;
+
+.btn-copy {
+  padding: 2px !important;
+
+  &:hover, &:focus {
+    padding: 0 !important;
+  }
+}
 .sect-start {
   margin-top: 1em;
-  display: flex;
-  gap: 1em;
-}
-.btn-start {
-  font-size: 2em;
-  border-radius: 0.25em;
-  color: rgb(243, 243, 229);
-  background-color: rgb(48, 119, 20);
-  padding: 0.1em 0.5em;
-  border: 0;
-  box-shadow: none;
 }
 
 .lobby {
   .players {
     display: flex;
+    justify-content: center;
     gap: 0.5em;
   }
 }
@@ -23,6 +23,7 @@
 .game-settings {
   display: flex;
   justify-content: space-between;
+  gap: .5em;
   margin-bottom: 1em;
   label {
     display: block;
@@ -33,15 +34,23 @@
       width: 100%;
     }
   }
+
+  @media #{widths.$medium} {
+    justify-content: center;
+    label {
+      width: 20%;
+    }
+  }
 }
+
 .game-rating {
   display: flex;
   .rating-opt {
     cursor: pointer;
     display: block;
-    border-left: 1px solid rgb(48, 119, 20);
-    border-top: 1px solid rgb(48, 119, 20);
-    border-bottom: 1px solid rgb(48, 119, 20);
+    border-left: 1px solid colors.$strong;
+    border-top: 1px solid colors.$strong;
+    border-bottom: 1px solid colors.$strong;
     text-align: center;
     width: 100%;
 
@@ -50,14 +59,14 @@
       border-bottom-left-radius: .25em;
     }
     &:last-child {
-      border-right: 1px solid rgb(48, 119, 20);
+      border-right: 1px solid colors.$strong;
       border-top-right-radius: .25em;
       border-bottom-right-radius: .25em;
     }
 
     &.selected {
-      color: rgb(243, 243, 229);
-      background-color: rgb(48, 119, 20);
+      color: colors.$light;
+      background-color: colors.$strong;
     }
   }
 }

@@ -1,0 +1,16 @@
+// Defining values
+$small-width:   0;
+$medium-width:  641px;
+$large-width:   1025px;
+$xlarge-width:  1441px;
+$xxlarge-width: 1921px;
+
+// Defining media queries
+$screen:       "only screen" !default;
+$landscape:    "only screen and (orientation: landscape)" !default;
+$portrait:     "only screen and (orientation: portrait)" !default;
+$small:     "only screen" !default;
+$medium:    "only screen and (min-width: #{$medium-width})" !default;
+$large:     "only screen and (min-width: #{$large-width})" !default;
+$xlarge:    "only screen and (min-width: #{$xlarge-width})" !default;
+$xxlarge:   "only screen and (min-width: #{$xxlarge-width})" !default;

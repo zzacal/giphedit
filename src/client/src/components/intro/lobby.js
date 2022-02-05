@@ -9,10 +9,11 @@ export const Lobby = ({ game, player, onStart }) => {
   const owner = game.players[0].id;
 
   return (
-    <div className="lobby">
+    <div className="lobby text-center">
       <h1>
-        <button onClick={() => navigator.clipboard.writeText(game.name)}>
-          {game.name} 📋
+        {game.name} <nbsp />
+        <button className="btn-safe btn-copy" onClick={() => navigator.clipboard.writeText(game.name)}>
+           📋
         </button>
       </h1>
       
@@ -24,7 +25,7 @@ export const Lobby = ({ game, player, onStart }) => {
       </div>
       {
         owner === player.id ? (<>
-          <div className="game-settings col-10 col-sm-6">
+          <div className="game-settings">
             <label>
               turns
               <input
@@ -45,7 +46,7 @@ export const Lobby = ({ game, player, onStart }) => {
             </label>
           </div>
           <label>rating</label>
-          <div className="game-rating col-10 col-sm-6">
+          <div className="game-rating">
               <RatingOpt rating="g" current={rating} onSet={setRating} />
               <RatingOpt rating="pg" current={rating} onSet={setRating} />
               <RatingOpt rating="pg-13" current={rating} onSet={setRating} />
@@ -54,9 +55,9 @@ export const Lobby = ({ game, player, onStart }) => {
         </>) : <></>
       }
       <div className="sect-start">
-        <button className="btn-start" onClick={() => onStart(game.id, turns, hand, rating)}>
+        <h3><button className="btn-primary" onClick={() => onStart(game.id, turns, hand, rating)}>
           START
-        </button>
+        </button></h3>
       </div>
     </div>
   );

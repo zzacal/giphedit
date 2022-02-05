@@ -4,7 +4,8 @@
 .btn-copy {
   padding: 2px !important;
 
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     padding: 0 !important;
   }
 }
@@ -22,24 +23,15 @@
 
 .game-settings {
   display: flex;
-  justify-content: space-between;
-  gap: .5em;
+  gap: 0.5em;
   margin-bottom: 1em;
   label {
-    display: block;
-    width: 48%;
-
     input {
       display: block;
-      width: 100%;
+      width: 5em;
     }
   }
-
   @media #{widths.$medium} {
-    justify-content: center;
-    label {
-      width: 20%;
-    }
   }
 }
 
@@ -53,15 +45,17 @@
     border-bottom: 1px solid colors.$strong;
     text-align: center;
     width: 100%;
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
 
     &:first-child {
-      border-top-left-radius: .25em;
-      border-bottom-left-radius: .25em;
+      border-top-left-radius: 0.25em;
+      border-bottom-left-radius: 0.25em;
     }
     &:last-child {
       border-right: 1px solid colors.$strong;
-      border-top-right-radius: .25em;
-      border-bottom-right-radius: .25em;
+      border-top-right-radius: 0.25em;
+      border-bottom-right-radius: 0.25em;
     }
 
     &.selected {

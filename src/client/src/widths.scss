@@ -1,5 +1,6 @@
 // Defining values
-$small-width:   0;
+$xsmall-width:   0;
+$small-width:  321px;
 $medium-width:  641px;
 $large-width:   1025px;
 $xlarge-width:  1441px;
@@ -9,7 +10,8 @@ $xxlarge-width: 1921px;
 $screen:       "only screen" !default;
 $landscape:    "only screen and (orientation: landscape)" !default;
 $portrait:     "only screen and (orientation: portrait)" !default;
-$small:     "only screen" !default;
+$xsmall:     "only screen" !default;
+$small:    "only screen and (min-width: #{$small-width})" !default;
 $medium:    "only screen and (min-width: #{$medium-width})" !default;
 $large:     "only screen and (min-width: #{$large-width})" !default;
 $xlarge:    "only screen and (min-width: #{$xlarge-width})" !default;

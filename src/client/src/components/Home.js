@@ -34,8 +34,10 @@ export const Home = ({ gameId, playerId }) => {
   };
 
   const onJoinGame = async (name) => {
-    const result = await games.find(name);
-    onGameFound(result, player);
+    if(name) {
+      const result = await games.find(name);
+      onGameFound(result, player);
+    }
   };
 
   const onGameFound = async (game, player) => {

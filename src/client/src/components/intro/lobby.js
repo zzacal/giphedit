@@ -11,7 +11,7 @@ export const Lobby = ({ game, player, onStart }) => {
   return (
     <div className="lobby">
       <h1 className="text-center">
-        {game.name} <nbsp />
+        {game.name} &nbsp;
         <button
           className="btn-safe btn-copy"
           onClick={() => navigator.clipboard.writeText(game.name)}

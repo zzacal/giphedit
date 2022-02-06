@@ -6,14 +6,12 @@ export class Players {
       method: "POST"
     });
     var json = await result.json();
-    console.log(json);
     return json;
   }
   get = async (playerId) => {
    const path = `/player/${playerId}`;
    var result = await fetch(this.url+path);
    var json = await result.json();
-   console.log(json);
    return json;
   }
   rename = async (playerId, name) => {
@@ -22,7 +20,6 @@ export class Players {
       method: "PUT"
     });
     var json = await result.json();
-    console.log(json);
     return json;
   }
 }

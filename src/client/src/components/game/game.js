@@ -1,7 +1,6 @@
 import { Card, Hand, Prompt } from ".";
 import "./game.scss";
 export const Game = ({ game, player, onPlay, onJudge }) => {
-  console.log("Game rendered");
   const { turns, players } = game;
   const { hand } = players.filter((p) => p.id === player.id)[0];
   const scores = new Map(players.map(p => [p.id, turns.filter(t => t?.winner?.playerId === p.id).length]));

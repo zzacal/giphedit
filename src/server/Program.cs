@@ -29,18 +29,6 @@ builder.Services.AddSingleton<ICardService, CardService>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddSignalR();
 
-var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-builder.Services.AddCors(options =>
-{
-  options.AddPolicy(
-    name: MyAllowSpecificOrigins,
-    builder =>
-    {
-      builder.WithOrigins("https://localhost:7145",
-                          "http://www.contoso.com");
-    });
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -58,7 +46,7 @@ app.UseRouting();
 app.UseCors(builder => builder
     .AllowAnyHeader()
     .AllowAnyMethod()
-    .SetIsOriginAllowed((host) => true)
+    .WithOrigins(configuration["ClientOrigin"])
     .AllowCredentials()
   );
   

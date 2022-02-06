@@ -5,14 +5,12 @@ import { Players } from "./players";
 
 class Services {
   constructor(){
-    console.log("Services instantiated")
   }
   getGameService = () => {
     if(this.game) {
       return this.game
     }
     this.game = new Games();
-    console.log("Game service created");
     return this.getGameService();
   } 
   getPlayerService = () => {
@@ -20,7 +18,6 @@ class Services {
       return this.players;
     }
     this.players = new Players();
-    console.log("Player service created");
     return this.getPlayerService();
   }
   getGameHub = (setGame) => {
@@ -28,7 +25,6 @@ class Services {
       return this.gameHub;
     }
     this.gameHub = new GameHub(setGame);
-    console.log(`game hub created`);
     return this.getGameHub(setGame);
   }
   getPersistence = () => {
@@ -36,7 +32,6 @@ class Services {
       return this.persistence;
     }
     this.persistence = new Persist();
-    console.log("Persist service created");
     return this.getPersistence();
   }
 }

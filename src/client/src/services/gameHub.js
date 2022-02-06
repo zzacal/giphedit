@@ -12,13 +12,10 @@ export class GameHub {
 
   connect = async () => {
     if(this.started) {
-      console.log("No need to start. it's already started")
       return false;
     }
-    console.log("Attempting to connect");
     try {
       await this.connection.start()
-      console.log("SignalR started");
       this.started = true;
     } catch (error) {
       console.error(error);
@@ -31,17 +28,14 @@ export class GameHub {
   }
   
   start = async (gameId, turns, handSize, rating) => {
-    console.log("hub starting")
     this.connection.send("start", gameId, turns, handSize, rating);
   }
 
   play = async (gameId, playerId, cardId) => {
-    console.log("hub playing")
     this.connection.send("play", gameId, playerId, cardId);
   }
 
   judge = async (gameId, playerId, cardId) => {
-    console.log("hub judging")
     this.connection.send("judge", gameId, playerId, cardId)
   }
 }

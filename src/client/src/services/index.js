@@ -4,8 +4,6 @@ import { Persist } from "./persist";
 import { Players } from "./players";
 
 class Services {
-  constructor(){
-  }
   getGameService = () => {
     if(this.game) {
       return this.game

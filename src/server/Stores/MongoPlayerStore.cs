@@ -9,8 +9,7 @@ public class MongoPlayerStore : IPlayerStore
   public MongoPlayerStore(string host, string username, string password, string databaseName, string collectionName = "players")
   {
     var connectionString = $"mongodb+srv://{username}:{password}@{host}/{databaseName}?retryWrites=true&w=majority";
-    Console.WriteLine("CONNECTION STRING");
-    Console.WriteLine(connectionString);
+
     var settings = MongoClientSettings.FromConnectionString(connectionString);
     var client = new MongoClient(settings);
     var db = client.GetDatabase(databaseName);

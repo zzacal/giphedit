@@ -6,9 +6,9 @@ name: Server Azure CI/CD
 on:
   push:
     branches:
-      - main
+    - main
     paths:
-      - 'src/server/**'
+    - 'src/server/**'
   workflow_dispatch:
 
 jobs:

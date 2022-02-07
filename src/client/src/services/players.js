@@ -1,5 +1,5 @@
 export class Players {
-  url = "https://localhost:7145"
+  url = process.env.REACT_APP_BACKEND_HOST;
   new = async (name) => {
     const path = `/player/${name}`;
     var result = await fetch(this.url+path, {

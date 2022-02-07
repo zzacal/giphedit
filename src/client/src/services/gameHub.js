@@ -2,8 +2,10 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 
 export class GameHub {
   started = false;
+
+  url = process.env.REACT_APP_BACKEND_HOST;
   constructor(setGame) {
-    this.connection = new HubConnectionBuilder().withUrl("https://localhost:7145/play").build();
+    this.connection = new HubConnectionBuilder().withUrl(this.url + "/play").build();
 
     this.connection.on("ReceiveGame", (data) => {
       setGame(data);

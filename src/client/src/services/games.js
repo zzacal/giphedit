@@ -1,5 +1,5 @@
 export class Games {
-  url = "https://localhost:7145"
+  url = process.env.REACT_APP_BACKEND_HOST;
   find = async (name) => {
     const path = `/game/find/${name}`;
     var result = await fetch(this.url+path);

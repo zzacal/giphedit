@@ -9,6 +9,7 @@ on:
     - main
     paths:
     - 'src/server/**'
+    - '.github/workflows/main_giphed-server.yml'
   workflow_dispatch:
 
 jobs:

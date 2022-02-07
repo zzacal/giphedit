@@ -34,4 +34,4 @@ jobs:
           output_location: "build" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env: # Add environment variables here
-          REACT_APP_BACKEND_HOST: some_host
+          REACT_APP_BACKEND_HOST: ${{ secrets.REACT_APP_BACKEND_HOST }}

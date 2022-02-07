@@ -36,14 +36,23 @@ public class GameService : IGameService
       return game;
     }
 
+    // Create next turn
     var nextJudgeIndex = 
       game.Turns.TryPeek(out var last) && 
       game.Players.FindIndex(p => p.Id == last.Judge.Id) < game.Players.Count - 1
         ? game.Players.FindIndex(p => p.Id == last.Judge.Id) + 1
         : 0;
     var next = new Turn(nextCard, game.Players[nextJudgeIndex]);
-
     game.Turns.Push(next);
+
+    // Players draw card
+    // TODO: Should draw as many cards as needed to satisfy
+    //  The hand size setting
+    game.Players.ForEach(p => {
+      if(p.Hand.Count < game.HandSize && game.DrawStack.TryPop(out var drawn)) {
+        p.Hand.Add(drawn);
+      }
+    });
 
     return game;
   }
@@ -101,6 +110,10 @@ public class GameService : IGameService
     if(game.IsStarted){
       return game;
     }
+
+    game.TurnsPerPlayer = turns;
+    game.HandSize = handSize;
+    game.Rating = rating;
 
     // Calculate cahdz needed
     var turnCount = countTurns(game.Players.Count, turns);

@@ -12,8 +12,7 @@ export class GameHub {
     if(this.isConnected) {
       return false;
     }
-    try {
-  
+    try {  
       this.connection.on("ReceiveGame", (data) => {
         setGame(data);
       });

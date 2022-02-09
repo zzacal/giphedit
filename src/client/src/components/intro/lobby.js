@@ -75,6 +75,8 @@ const RatingOpt = ({ rating, current, onSet }) => (
 const selectedIf = (expected, actual) =>
   expected === actual ? "selected" : "";
 
+const getInt = (val) => parseInt(val);
+
 const GameSettings = ({
   turns,
   setTurns,
@@ -91,7 +93,7 @@ const GameSettings = ({
           type="number"
           className="input-primary"
           value={turns}
-          onChange={(e) => setTurns(e.target.value)}
+          onChange={(e) => setTurns(getInt(e.target.value))}
         />
       </label>
       <label>
@@ -100,7 +102,7 @@ const GameSettings = ({
           type="number"
           className="input-primary"
           value={hand}
-          onChange={(e) => setHand(e.target.value)}
+          onChange={(e) => setHand(getInt(e.target.value))}
         />
       </label>
     </div>

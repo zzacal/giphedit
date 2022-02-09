@@ -1,27 +1,21 @@
 import React, { useEffect, useState } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import services from "../services";
 import { Game } from "./game";
 import { JoinGame, Lobby, NewPlayer } from "./intro";
 
-export const Home = ({ gameId, playerId }) => {
+
+const persist = services.getPersistence();
+const games = services.getGameService();
+const players = services.getPlayerService();
+const hub = services.getGameHub();
+
+export const Home = () => {
+  const history = useHistory();
   const [game, setGame] = useState(null);
   const [player, setPlayer] = useState(null);
-
-  const persist = services.getPersistence();
-  const games = services.getGameService();
-  const players = services.getPlayerService();
-  const hub = services.getGameHub(setGame);
-
-  const prstPlayerId = persist.get("playerId");
-
-  useEffect(() => {
-    if (!player && prstPlayerId) {
-      players.get(prstPlayerId).then((result) => {
-        setPlayer(result);
-      });
-    }
-  }, [prstPlayerId, player, players]);
-
+  const [gameId, setGameId] = useState(null);
+    
   const onNewPlayer = async (name) => {
     const result = await players.new(name);
     persist.set("playerId", result.id);
@@ -30,18 +24,20 @@ export const Home = ({ gameId, playerId }) => {
 
   const onNewGame = async () => {
     const result = await games.get();
-    onGameFound(result, player);
+    if(result) {
+      history.push(`/${result.name}`)
+      setGameId(result.id);
+    }
   };
 
   const onJoinGame = async (name) => {
     if(name) {
       const result = await games.find(name);
-      onGameFound(result, player);
+      if(result) {
+        history.push(`/${result.name}`)
+        setGameId(result.id);
+      }
     }
-  };
-
-  const onGameFound = async (game, player) => {
-    await hub.join(game.id, player.id);
   };
 
   const onStart = async (gameId, turns, hand, rating) => {
@@ -55,6 +51,27 @@ export const Home = ({ gameId, playerId }) => {
   const onJudge = async (cardId) => {
     await hub.judge(game.id, player.id, cardId);
   };
+  
+  const prstPlayerId = persist.get("playerId");
+  if (!player && prstPlayerId) {
+    players.get(prstPlayerId).then((result) => {
+      result && setPlayer(result);
+    })
+  }
+
+  let params = useParams();
+  const paramsGameName = params.gameName;
+  if(!gameId && paramsGameName) {
+    games.find(paramsGameName).then((result) => 
+      result && setGameId(result.id)
+    );
+  }
+
+  useEffect(() => {
+    if(!hub.isConnected && gameId && player?.id) {
+      hub.join(gameId, player.id, setGame);
+    }
+  }, [gameId, player?.id])
 
   if (!player) {
     return <NewPlayer onSubmit={onNewPlayer} />;

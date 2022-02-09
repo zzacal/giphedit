@@ -1,22 +1,23 @@
 import { HubConnectionBuilder } from "@microsoft/signalr";
 
 export class GameHub {
-  started = false;
-
+  isConnected = false;
   url = process.env.REACT_APP_BACKEND_HOST;
-  constructor(setGame) {
-    this.connection = new HubConnectionBuilder().withUrl(this.url + "/play").build();
 
-    this.connection.on("ReceiveGame", (data) => {
-      setGame(data);
-    });
+  constructor () {
+    this.connection = new HubConnectionBuilder().withUrl(this.url + "/play").build();
   }
 
-  connect = async () => {
-    if(this.started) {
+  connect = async (setGame) => {
+    if(this.isConnected) {
       return false;
     }
     try {
+  
+      this.connection.on("ReceiveGame", (data) => {
+        setGame(data);
+      });
+
       await this.connection.start()
       this.started = true;
     } catch (error) {
@@ -24,8 +25,8 @@ export class GameHub {
     }
   }
 
-  join = async (gameId, playerId) => {
-    await this.connect();
+  join = async (gameId, playerId, setGame) => {
+    await this.connect(setGame);
     this.connection.send("join", gameId, playerId);
   }
   

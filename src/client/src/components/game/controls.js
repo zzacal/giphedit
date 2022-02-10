@@ -1,4 +1,4 @@
-import { Card, Hand } from "./";
+import { Hand } from "./";
 import "./controls.scss";
 
 export const Controls = ({

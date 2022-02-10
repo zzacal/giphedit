@@ -40,7 +40,7 @@ const getControls = (
   } else if (isPlaying) {
     return <Hand cards={hand} onLock={onPlay} label="Play a card" />;
   } else if (hasPlayed) {
-    return <Card id={played.id} src={played.imgUrl} isSelected={true} />;
+    return <Card id={played.id} src={played.imgUrl} />;
   } else {
     return <></>;
   }

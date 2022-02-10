@@ -1,4 +1,4 @@
-export const Card = ({ playerId, cardId, src, isSelected, onClick, onLock }) => {
+export const Card = ({ playerId, src, isSelected = false, onClick, onLock }) => {
   return (
     <span className={`card ${isSelected ? "selected" : ""}`} onClick={onClick}>
       <img src={src} alt="card option" />

@@ -42,11 +42,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-
+var cliOrigins = configuration["ClientOrigins"]?.Split(",") ?? new string[0];
 app.UseCors(builder => builder
     .AllowAnyHeader()
     .AllowAnyMethod()
-    .WithOrigins(configuration["ClientOrigin"])
+    .WithOrigins(cliOrigins)
     .AllowCredentials()
   );
   

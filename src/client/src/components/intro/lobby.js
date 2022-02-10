@@ -11,12 +11,13 @@ export const Lobby = ({ game, player, onStart }) => {
   return (
     <div className="lobby">
       <h1 className="text-center">
-        {game.name} &nbsp;
+        {game.name}
         <button
-          className="btn-safe btn-copy"
-          onClick={() => navigator.clipboard.writeText(game.name)}
+          className="btn-safe btn-copy h3"
+          onClick={() => navigator.clipboard.writeText(window.location.href)}
+          title="get link"
         >
-          📋
+          🔗
         </button>
       </h1>
       <div className="row justify-content-center">

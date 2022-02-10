@@ -39,6 +39,10 @@ code {
     border-color: colors.$strong;  
     padding: .25em 1em;
   }
+
+  &:focus {
+    border: 2px solid colors.$strong;
+  }
 }
 
 .txt-btn {

@@ -1,0 +1,49 @@
+.hand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1em;
+  @media only screen and (min-width: 769px) {
+    gap: 0.25em;
+  }
+  @media only screen and (min-width: 992px) {
+    gap: 0.5em;
+  }
+}
+.card {
+  background-color: #eec48d;
+  width: 8em;
+  padding: 0.2em;
+  @media only screen and (min-width: 769px) {
+    width: 10em;
+    padding: 0.5em;
+  }
+  @media only screen and (min-width: 992px) {
+    width: 13em;
+    padding: 0.75em;
+  }
+  &:hover {
+    background-color: #eeb871;
+    cursor: pointer;
+  }
+  &.selected {
+    background-color: #eca344;
+  }
+  .btn-play {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 60%;
+  }
+}
+
+.btn-play {
+  border: none;
+  box-shadow: none;
+  width: 100px;
+  border-radius: 0.25em;
+  background-color: #59d552;
+}

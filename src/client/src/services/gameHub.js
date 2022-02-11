@@ -1,18 +1,14 @@
-import { HubConnectionBuilder } from "@microsoft/signalr";
+import { HubConnectionBuilder, HubConnectionState } from "@microsoft/signalr";
 
 export class GameHub {
-  isConnected = false;
   url = process.env.REACT_APP_BACKEND_HOST;
 
-  constructor () {
-    this.connection = new HubConnectionBuilder().withUrl(this.url + "/play").build();
-  }
-
   connect = async (setGame) => {
-    if(this.isConnected) {
+    if(this.connection?.state === HubConnectionState.Connected) {
       return false;
     }
-    try {  
+    try {
+      this.connection = new HubConnectionBuilder().withUrl(this.url + "/play").build();
       this.connection.on("ReceiveGame", (data) => {
         setGame(data);
       });
@@ -24,20 +20,35 @@ export class GameHub {
     }
   }
 
+  ensureGameConnected = async (gameId, playerId, setGame) => {
+    if(this.connection?.state !== HubConnectionState.Connected) {
+      await this.join(gameId, playerId, setGame);
+    }
+  }
+
   join = async (gameId, playerId, setGame) => {
     await this.connect(setGame);
-    this.connection.send("join", gameId, playerId);
+    await this.connection.send("join", gameId, playerId);
   }
   
-  start = async (gameId, turns, handSize, rating) => {
-    this.connection.send("start", gameId, turns, handSize, rating);
+  start = async (gameId,  playerId,turns, handSize, rating, setGame) => {
+    await this.ensureGameConnected(gameId, playerId, setGame);
+    await this.connection.send("start", gameId, turns, handSize, rating);
   }
 
-  play = async (gameId, playerId, cardId) => {
-    this.connection.send("play", gameId, playerId, cardId);
+  play = async (gameId, playerId, cardId, setGame) => {
+    await this.ensureGameConnected(gameId, playerId, setGame);
+    await this.connection.send("play", gameId, playerId, cardId);
   }
 
-  judge = async (gameId, playerId, cardId) => {
-    this.connection.send("judge", gameId, playerId, cardId)
+  judge = async (gameId, playerId, cardId, setGame) => {
+    await this.ensureGameConnected(gameId, playerId, setGame);
+    await this.connection.send("judge", gameId, playerId, cardId)
+  }
+
+  disconnect = async () => {
+    if(this.connection.state === HubConnectionState.Connected) {
+      await this.connection.stop();
+    }
   }
 }

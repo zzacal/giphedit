@@ -41,15 +41,15 @@ export const Home = () => {
   };
 
   const onStart = async (gameId, turns, hand, rating) => {
-    await hub.start(gameId, turns, hand, rating);
+    await hub.start(gameId, player.id, turns, hand, rating, setGame);
   };
 
   const onPlay = async (cardId) => {
-    await hub.play(game.id, player.id, cardId);
+    await hub.play(game.id, player.id, cardId, setGame);
   };
 
   const onJudge = async (cardId) => {
-    await hub.judge(game.id, player.id, cardId);
+    await hub.judge(game.id, player.id, cardId, setGame);
   };
   
   const prstPlayerId = persist.get("playerId");

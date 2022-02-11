@@ -18,7 +18,6 @@ export const Controls = ({
   : isPlaying ?
     <Hand cards={hand} onLock={onPlay} label="play a card" />
   : (hasPlayed) ?
-    // <Card id={played.id} src={played.imgUrl} />
     <Hand cards={[played]} onLock={()=>{}} label="you chose" />
   :
    <></>

@@ -24,8 +24,7 @@ export const Home = () => {
   const onNewGame = async () => {
     const result = await games.get();
     if (result) {
-      setGameId(result.id);
-      // history.push(`/${result.name}`);
+      history.push(`/${result.name}`);
     }
   };
 
@@ -33,8 +32,7 @@ export const Home = () => {
     if (name) {
       const result = await games.find(name);
       if (result) {
-        setGameId(result.id);
-        // history.push(`/${result.name}`);
+        history.push(`/${result.name}`);
       }
     }
   };

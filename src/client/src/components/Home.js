@@ -14,62 +14,41 @@ export const Home = () => {
   const [game, setGame] = useState(null);
   const [player, setPlayer] = useState(null);
   const [gameId, setGameId] = useState(null);
-  const [isLoading, setIsLoading] = useState(null);
 
-  const wait = async (awaitable) => {
-    setIsLoading(true);
-    try{
-      await awaitable();
-    } finally {
-      setIsLoading(false);
-    }
-  };
   const onNewPlayer = async (name) => {
-    await wait(async () => {
-      const result = await players.new(name);
-      persist.set("playerId", result.id);
-      setPlayer(result);
-    });
+    const result = await players.new(name);
+    persist.set("playerId", result.id);
+    setPlayer(result);
   };
 
   const onNewGame = async () => {
-    await wait(async () => {
-      const result = await games.get();
-      if (result) {
-        history.push(`/${result.name}`);
-        setGameId(result.id);
-      }
-    });
+    const result = await games.get();
+    if (result) {
+      setGameId(result.id);
+      // history.push(`/${result.name}`);
+    }
   };
 
   const onJoinGame = async (name) => {
-    await wait(async () => {
-      if (name) {
-        const result = await games.find(name);
-        if (result) {
-          history.push(`/${result.name}`);
-          setGameId(result.id);
-        }
+    if (name) {
+      const result = await games.find(name);
+      if (result) {
+        setGameId(result.id);
+        // history.push(`/${result.name}`);
       }
-    });
+    }
   };
 
   const onStart = async (gameId, turns, hand, rating) => {
-    await wait(async () => {
-      await hub.start(gameId, player.id, turns, hand, rating, setGame);
-    });
+    await hub.start(gameId, player.id, turns, hand, rating, setGame);
   };
 
   const onPlay = async (cardId) => {
-    await wait(async () => {
-      await wait(hub.play(game.id, player.id, cardId, setGame));
-    });
+    await hub.play(game.id, player.id, cardId, setGame);
   };
 
   const onJudge = async (cardId) => {
-    await wait(async () => {
-      await hub.judge(game.id, player.id, cardId, setGame);
-    });
+    await hub.judge(game.id, player.id, cardId, setGame);
   };
 
   const prstPlayerId = persist.get("playerId");
@@ -86,14 +65,12 @@ export const Home = () => {
   }
 
   useEffect(() => {
-    if (!hub.isConnected && gameId && player?.id) {
+    if (gameId && player?.id) {
       hub.join(gameId, player.id, setGame);
     }
   }, [gameId, player?.id]);
 
-  if (isLoading) {
-    return <div class="text-center h2">☕️</div>;
-  } else if (!player) {
+  if (!player) {
     return <NewPlayer onSubmit={onNewPlayer} />;
   } else if (!game) {
     return (

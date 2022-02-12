@@ -31,18 +31,15 @@ export class GameHub {
     await this.connection.send("join", gameId, playerId);
   }
   
-  start = async (gameId,  playerId,turns, handSize, rating, setGame) => {
-    await this.ensureGameConnected(gameId, playerId, setGame);
+  start = async (gameId, turns, handSize, rating) => {
     await this.connection.send("start", gameId, turns, handSize, rating);
   }
 
-  play = async (gameId, playerId, cardId, setGame) => {
-    await this.ensureGameConnected(gameId, playerId, setGame);
+  play = async (gameId, playerId, cardId) => {
     await this.connection.send("play", gameId, playerId, cardId);
   }
 
-  judge = async (gameId, playerId, cardId, setGame) => {
-    await this.ensureGameConnected(gameId, playerId, setGame);
+  judge = async (gameId, playerId, cardId) => {
     await this.connection.send("judge", gameId, playerId, cardId)
   }
 
